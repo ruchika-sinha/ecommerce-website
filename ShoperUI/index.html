@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoperUI - Your Ultimate Shopping Destination</title>
+    <meta name="description" content="Discover amazing products at ShoperUI - your trusted online shopping destination for men's, women's, and kids' fashion with unbeatable prices.">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#" onclick="showPage('home')">
+                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=40&h=40&fit=crop&auto=format" 
+                     alt="ShoperUI Logo" class="logo-img me-2">
+                <span class="brand-text">ShoperUI</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showCategory('all')">All Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showCategory('men')">Men</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showCategory('women')">Women</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showCategory('kids')">Kids</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showCategory('deals')">Today's Deals</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <div class="search-container me-3">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+                        <i class="bi bi-search search-icon"></i>
+                    </div>
+                    <button class="btn btn-outline-primary me-2" onclick="showPage('cart')">
+                        <i class="bi bi-cart3"></i>
+                        <span class="badge bg-danger" id="cartCount">0</span>
+                    </button>
+                    <button class="btn btn-outline-secondary">
+                        <i class="bi bi-person"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Homepage -->
+        <div id="homePage" class="page-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-overlay">
+                    <div class="container">
+                        <div class="row align-items-center min-vh-50">
+                            <div class="col-lg-6">
+                                <h1 class="hero-title">Welcome to Our Store!</h1>
+                                <p class="hero-subtitle">Discover amazing products with unbeatable prices and quality you can trust.</p>
+                                <button class="btn btn-primary btn-lg hero-btn" onclick="showCategory('all')">
+                                    Shop Now <i class="bi bi-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Categories -->
+            <section class="py-5">
+                <div class="container">
+                    <h2 class="text-center mb-5">Featured Categories</h2>
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="category-card" onclick="showCategory('men')">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop" 
+                                     alt="Men's Fashion" class="category-img">
+                                <div class="category-overlay">
+                                    <h5>Men's Fashion</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="category-card" onclick="showCategory('women')">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616c830e5d8?w=300&h=200&fit=crop" 
+                                     alt="Women's Fashion" class="category-img">
+                                <div class="category-overlay">
+                                    <h5>Women's Fashion</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="category-card" onclick="showCategory('kids')">
+                                <img src="https://images.unsplash.com/photo-1503944583220-79d8926ad5d2?w=300&h=200&fit=crop" 
+                                     alt="Kids Collection" class="category-img">
+                                <div class="category-overlay">
+                                    <h5>Kids Collection</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="category-card" onclick="showCategory('deals')">
+                                <img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=300&h=200&fit=crop" 
+                                     alt="Today's Deals" class="category-img">
+                                <div class="category-overlay">
+                                    <h5>Today's Deals</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- New Arrivals -->
+            <section class="py-5 bg-light">
+                <div class="container">
+                    <h2 class="text-center mb-5">New Arrivals</h2>
+                    <div class="row g-4" id="homeProducts">
+                        <!-- Products will be loaded here -->
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" onclick="showCategory('all')">View All Products</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Products Page -->
+        <div id="productsPage" class="page-content d-none">
+            <div class="container py-5">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h2 id="categoryTitle">All Products</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="search-container">
+                            <input type="text" class="form-control" id="productSearchInput" placeholder="Search products..." onkeyup="filterProducts()">
+                            <i class="bi bi-search search-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Page -->
+        <div id="cartPage" class="page-content d-none">
+            <div class="container py-5">
+                <h2 class="mb-4">Shopping Cart</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div id="cartItems">
+                            <!-- Cart items will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Order Summary</h5>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Subtotal:</span>
+                                    <span id="subtotal">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Shipping:</span>
+                                    <span id="shipping">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Tax:</span>
+                                    <span id="tax">$0.00</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <strong>Total:</strong>
+                                    <strong id="total">$0.00</strong>
+                                </div>
+                                <button class="btn btn-primary w-100" onclick="showCheckout()">Proceed to Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Page -->
+        <div id="checkoutPage" class="page-content d-none">
+            <div class="container py-5">
+                <h2 class="mb-4">Checkout</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form id="checkoutForm">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5><i class="bi bi-geo-alt me-2"></i>Shipping Address</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Street Address</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">City</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">State</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">ZIP Code</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5><i class="bi bi-credit-card me-2"></i>Payment Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label">Name on Card</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Card Number</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Expiry Date</label>
+                                            <input type="text" class="form-control" placeholder="MM/YY" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">CVV</label>
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Order Summary</h5>
+                                <div id="checkoutItems">
+                                    <!-- Checkout items will be loaded here -->
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Coupon Code</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="couponCode" placeholder="Enter coupon">
+                                        <button class="btn btn-outline-secondary" onclick="applyCoupon()">Apply</button>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Subtotal:</span>
+                                    <span id="checkoutSubtotal">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Shipping:</span>
+                                    <span id="checkoutShipping">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Tax:</span>
+                                    <span id="checkoutTax">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2" id="discountRow" style="display: none;">
+                                    <span class="text-success">Discount:</span>
+                                    <span class="text-success" id="discount">-$0.00</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <strong>Total:</strong>
+                                    <strong id="checkoutTotal">$0.00</strong>
+                                </div>
+                                <div class="mb-3 p-3 bg-light rounded">
+                                    <div class="d-flex align-items-center text-primary">
+                                        <i class="bi bi-calendar me-2"></i>
+                                        <strong>Estimated Delivery</strong>
+                                    </div>
+                                    <p class="mb-0" id="deliveryDate"></p>
+                                </div>
+                                <button class="btn btn-primary w-100" onclick="placeOrder()">Place Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light">
+        <!-- Newsletter Section -->
+        <div class="bg-primary py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h4 class="mb-2">Stay Updated</h4>
+                        <p class="mb-0">Subscribe to our newsletter for exclusive deals and offers.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Enter your email" id="newsletterEmail">
+                            <button class="btn btn-dark" onclick="subscribeNewsletter()">
+                                <i class="bi bi-send"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=40&h=40&fit=crop&auto=format" 
+                             alt="ShoperUI Logo" class="logo-img me-2">
+                        <h5 class="text-primary mb-0">ShoperUI</h5>
+                    </div>
+                    <p class="text-muted">Your trusted online shopping destination for quality products at unbeatable prices.</p>
+                    <div class="d-flex gap-3">
+                        <a href="mailto:hello@shoperui.com" class="text-light"><i class="bi bi-envelope"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-light"><i class="bi bi-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none" onclick="showCategory('all')">All Products</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none" onclick="showCategory('men')">Men's Fashion</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none" onclick="showCategory('women')">Women's Fashion</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none" onclick="showCategory('kids')">Kids Collection</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="mb-3">Customer Service</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none">Contact Us</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Shipping Info</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Returns & Exchanges</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Size Guide</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="mb-3">About ShoperUI</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none">About Us</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Our Story</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Careers</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">&copy; 2025 ShoperUI. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-muted text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-muted text-decoration-none me-3">Terms of Service</a>
+                    <a href="#" class="text-muted text-decoration-none">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalProductName"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="position-relative">
+                                <img id="modalProductImage" class="img-fluid rounded zoom-image" alt="">
+                                <button class="btn btn-light position-absolute top-0 end-0 m-2" onclick="toggleZoom()">
+                                    <i class="bi bi-zoom-in" id="zoomIcon"></i>
+                                </button>
+                            </div>
+                            <div class="d-flex gap-2 mt-3" id="modalImageThumbnails">
+                                <!-- Thumbnails will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="stars me-2" id="modalProductRating"></div>
+                                <span class="text-muted" id="modalReviewCount"></span>
+                            </div>
+                            <div class="mb-3">
+                                <span class="h4" id="modalProductPrice"></span>
+                                <span class="text-muted text-decoration-line-through ms-2" id="modalOriginalPrice"></span>
+                            </div>
+                            <p id="modalProductDescription" class="text-muted mb-4"></p>
+                            <div class="d-flex align-items-center mb-4">
+                                <label class="me-3">Quantity:</label>
+                                <div class="input-group" style="width: 120px;">
+                                    <button class="btn btn-outline-secondary" onclick="changeQuantity(-1)">-</button>
+                                    <input type="number" class="form-control text-center" id="modalQuantity" value="1" min="1">
+                                    <button class="btn btn-outline-secondary" onclick="changeQuantity(1)">+</button>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100 mb-3" onclick="addToCartFromModal()">
+                                <i class="bi bi-cart-plus me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6>Customer Reviews</h6>
+                            <button class="btn btn-outline-primary btn-sm" onclick="showReviewForm()">Write Review</button>
+                        </div>
+                        <div id="reviewForm" class="card mb-3" style="display: none;">
+                            <div class="card-body">
+                                <h6>Write Your Review</h6>
+                                <div class="mb-3">
+                                    <label class="form-label">Rating</label>
+                                    <div class="rating-input" id="ratingInput">
+                                        <i class="bi bi-star" data-rating="1"></i>
+                                        <i class="bi bi-star" data-rating="2"></i>
+                                        <i class="bi bi-star" data-rating="3"></i>
+                                        <i class="bi bi-star" data-rating="4"></i>
+                                        <i class="bi bi-star" data-rating="5"></i>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="reviewText" rows="3" placeholder="Share your experience (max 150 words)" maxlength="750"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Upload Images/Videos (optional)</label>
+                                    <input type="file" class="form-control" multiple accept="image/*,video/*">
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-secondary" onclick="hideReviewForm()">Cancel</button>
+                                    <button class="btn btn-primary" onclick="submitReview()">Submit Review</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="modalReviews">
+                            <!-- Reviews will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
